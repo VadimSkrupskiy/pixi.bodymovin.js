@@ -48,6 +48,8 @@ export default class AnimationGroup {
    * @param {Number} [options.delay=0] need delay how much time to begin, effect every round
    * @param {String} [options.prefix=''] assets url prefix, like link path
    * @param {Number} [options.timeScale=1] animation speed
+   * @param {Number} [options.textures] texture arr
+   * @param {Function} [options.callback] callback after animation
    */
   constructor(options) {
     this.prefix = options.prefix || '';
@@ -55,6 +57,8 @@ export default class AnimationGroup {
     this.fr = this.keyframes.fr;
     this.ip = this.keyframes.ip;
     this.op = this.keyframes.op;
+    this.textureArr = options.textures || '';
+    this.animCallback = options.callback || function() {};
 
     this.tpf = 1000 / this.fr;
     this.tfs = Math.floor(this.op - this.ip);
@@ -81,7 +85,7 @@ export default class AnimationGroup {
     this.paused = false;
 
     this.group = new Container();
-
+    
     this.parserComposition(this.group, this.keyframes.layers);
   }
 
@@ -95,7 +99,12 @@ export default class AnimationGroup {
     const asset = this.getAssets(layerData.refId);
     const up = asset.u + asset.p;
     const url = asset.up || up;
-    const sprite = Sprite.fromImage(url);
+    let sprite;
+    if(this.textureArr == '') { 
+      sprite = Sprite.fromImage(url);
+    } else {
+      sprite = Sprite.from(this.textureArr[asset.p]);
+    }  
     return sprite;
   }
 
@@ -118,7 +127,7 @@ export default class AnimationGroup {
    */
   initLayers(layersData) {
     const layersMap = {};
-    const tpf = this.tpf;
+    const tpf = this.tpf;    
     for (let i = layersData.length - 1; i >= 0; i--) {
       const layer = layersData[i];
       let element = null;
@@ -218,6 +227,7 @@ export default class AnimationGroup {
         }
       } else {
         this.living = false;
+        this.animCallback(); // work 3 times......
       }
     }
   }

@@ -855,6 +855,9 @@ function () {
    * @param {Number} [options.delay=0] need delay how much time to begin, effect every round
    * @param {String} [options.prefix=''] assets url prefix, like link path
    * @param {Number} [options.timeScale=1] animation speed
+   * @param {Number} [options.textures] texture arr
+   * @param {Number} [options.scale] scale of every sprite
+   * @param {Function} [options.callback] callback after animation
    */
   function AnimationGroup(options) {
     _classCallCheck(this, AnimationGroup);
@@ -864,6 +867,11 @@ function () {
     this.fr = this.keyframes.fr;
     this.ip = this.keyframes.ip;
     this.op = this.keyframes.op;
+    this.textureArr = options.textures || '';
+    this.scale = options.scale || 1;
+
+    this.animCallback = options.callback || function () {};
+
     this.tpf = 1000 / this.fr;
     this.tfs = Math.floor(this.op - this.ip);
     this.living = true;
@@ -898,7 +906,15 @@ function () {
       var asset = this.getAssets(layerData.refId);
       var up = asset.u + asset.p;
       var url = asset.up || up;
-      var sprite = Sprite.fromImage(url);
+      var sprite;
+
+      if (this.textureArr == '') {
+        sprite = Sprite.fromImage(url);
+      } else {
+        sprite = Sprite.from(this.textureArr[asset.p]);
+      }
+
+      sprite.scale.set(this.scale);
       return sprite;
     }
     /**
@@ -1042,6 +1058,7 @@ function () {
           }
         } else {
           this.living = false;
+          this.animCallback(); // work 3 times......
         }
       }
     }

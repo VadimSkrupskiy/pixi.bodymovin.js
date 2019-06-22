@@ -38,6 +38,7 @@
       keyframes: data,
       prefix: '',
       infinite: true,
+      callback: ()=>{ console.log('animation end!') }
     });
 
     app.stage.addChild(ani.group);
