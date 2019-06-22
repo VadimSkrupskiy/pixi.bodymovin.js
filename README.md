@@ -26,10 +26,17 @@ document.body.appendChild(app.view);
 
 const animationManager = new AnimationManager(app.ticker);
 
+let spritesheetArray;
+PIXI.loader.load((loader, resources) => {
+  spritesheetArray = resources;
+})
+
 const anim = manager.parserAnimation({
   keyframes: data,
   prefix: '',
   infinite: true,
+  textures: spritesheetArray,
+  callback: () => { console.log('finished!') }
 });
 
 app.stage.addChild(anim.group);
