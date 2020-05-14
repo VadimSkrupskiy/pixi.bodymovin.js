@@ -856,7 +856,6 @@ function () {
    * @param {String} [options.prefix=''] assets url prefix, like link path
    * @param {Number} [options.timeScale=1] animation speed
    * @param {Number} [options.textures] texture arr
-   * @param {Number} [options.scale] scale of every sprite
    * @param {Function} [options.callback] callback after animation
    */
   function AnimationGroup(options) {
@@ -868,7 +867,6 @@ function () {
     this.ip = this.keyframes.ip;
     this.op = this.keyframes.op;
     this.textureArr = options.textures || '';
-    this.scale = options.scale || 1;
 
     this.animCallback = options.callback || function () {};
 
@@ -914,7 +912,6 @@ function () {
         sprite = Sprite.from(this.textureArr[asset.p]);
       }
 
-      sprite.scale.set(this.scale);
       return sprite;
     }
     /**

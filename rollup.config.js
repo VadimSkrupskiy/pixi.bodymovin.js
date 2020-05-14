@@ -24,6 +24,16 @@ export default {
       format: 'es',
       file: 'build/index.module.js',
     },
+    {
+      file: "dist/pixi.bodymovin.js",
+      format: 'iife',
+      name: 'PIXI',
+      sourcemap: false,
+      extend: true,
+      globals: {
+        'pixi.js': 'PIXI'
+      }
+    }
   ],
   plugins: [
     babel({

@@ -1,8 +1,5 @@
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('pixi.js')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'pixi.js'], factory) :
-  (factory((global.PIXI = global.PIXI || {}),global.PIXI));
-}(this, (function (exports,pixi_js) { 'use strict';
+(function (exports,pixi_js) {
+  'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1415,7 +1412,4 @@
   exports.AnimationGroup = AnimationGroup;
   exports.AnimationManager = AnimationManager;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-//# sourceMappingURL=index.js.map
+}((this.PIXI = this.PIXI || {}),PIXI));
