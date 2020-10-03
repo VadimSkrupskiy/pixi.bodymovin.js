@@ -910,8 +910,8 @@
         var url = asset.up || up;
         var sprite;
 
-        if (this.textureArr == '') {
-          sprite = pixi_js.Sprite.fromImage(url);
+        if (!this.textureArr && this.textureArr == '') {
+          sprite = pixi_js.Sprite.from(PIXI.utils.TextureCache[asset.p]);
         } else {
           sprite = pixi_js.Sprite.from(this.textureArr[asset.p]);
         }

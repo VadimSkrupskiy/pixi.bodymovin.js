@@ -1,6 +1,7 @@
 import {
   Container,
   Sprite,
+  utils
 } from 'pixi.js';
 import Utils from '../utils/Utils';
 import KeyframesBuffer from './KeyframesBuffer';
@@ -85,7 +86,7 @@ export default class AnimationGroup {
     this.paused = false;
 
     this.group = new Container();
-    
+
     this.parserComposition(this.group, this.keyframes.layers);
   }
 
@@ -100,11 +101,11 @@ export default class AnimationGroup {
     const up = asset.u + asset.p;
     const url = asset.up || up;
     let sprite;
-    if(this.textureArr == '') { 
-      sprite = Sprite.fromImage(url);
+    if(!this.textureArr && this.textureArr == '') {
+      sprite = Sprite.from(PIXI.utils.TextureCache[asset.p]);
     } else {
       sprite = Sprite.from(this.textureArr[asset.p]);
-    }  
+    }
     return sprite;
   }
 
@@ -127,7 +128,7 @@ export default class AnimationGroup {
    */
   initLayers(layersData) {
     const layersMap = {};
-    const tpf = this.tpf;    
+    const tpf = this.tpf;
     for (let i = layersData.length - 1; i >= 0; i--) {
       const layer = layersData[i];
       let element = null;
