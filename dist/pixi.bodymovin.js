@@ -907,10 +907,14 @@
         var url = asset.up || up;
         var sprite;
 
-        if (!this.textureArr && this.textureArr == '') {
-          sprite = pixi_js.Sprite.from(PIXI.utils.TextureCache[asset.p]);
-        } else {
-          sprite = pixi_js.Sprite.from(this.textureArr[asset.p]);
+        try {
+          if (!this.textureArr && this.textureArr == '') {
+            sprite = pixi_js.Sprite.from(PIXI.utils.TextureCache[asset.p]);
+          } else {
+            sprite = pixi_js.Sprite.from(this.textureArr[asset.p]);
+          }
+        } catch (e) {
+          sprite = pixi_js.Sprite.from(pixi_js.Texture.EMPTY);
         }
 
         return sprite;

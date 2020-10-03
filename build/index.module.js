@@ -1,4 +1,4 @@
-import { DisplayObject, Point, Container, Sprite, ticker } from 'pixi.js';
+import { DisplayObject, Point, Container, Sprite, Texture, ticker } from 'pixi.js';
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -906,10 +906,14 @@ function () {
       var url = asset.up || up;
       var sprite;
 
-      if (!this.textureArr && this.textureArr == '') {
-        sprite = Sprite.from(PIXI.utils.TextureCache[asset.p]);
-      } else {
-        sprite = Sprite.from(this.textureArr[asset.p]);
+      try {
+        if (!this.textureArr && this.textureArr == '') {
+          sprite = Sprite.from(PIXI.utils.TextureCache[asset.p]);
+        } else {
+          sprite = Sprite.from(this.textureArr[asset.p]);
+        }
+      } catch (e) {
+        sprite = Sprite.from(Texture.EMPTY);
       }
 
       return sprite;

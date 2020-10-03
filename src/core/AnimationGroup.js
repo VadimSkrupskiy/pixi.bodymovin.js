@@ -1,6 +1,7 @@
 import {
   Container,
   Sprite,
+  Texture,
   utils
 } from 'pixi.js';
 import Utils from '../utils/Utils';
@@ -101,11 +102,17 @@ export default class AnimationGroup {
     const up = asset.u + asset.p;
     const url = asset.up || up;
     let sprite;
-    if(!this.textureArr && this.textureArr == '') {
-      sprite = Sprite.from(PIXI.utils.TextureCache[asset.p]);
-    } else {
-      sprite = Sprite.from(this.textureArr[asset.p]);
+
+    try {
+      if(!this.textureArr && this.textureArr == '') {
+        sprite = Sprite.from(PIXI.utils.TextureCache[asset.p]);
+      } else {
+        sprite = Sprite.from(this.textureArr[asset.p]);
+      }
+    } catch(e) {
+      sprite = Sprite.from(Texture.EMPTY);
     }
+
     return sprite;
   }
 
